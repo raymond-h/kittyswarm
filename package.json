@@ -35,5 +35,9 @@
     "simple-peer": "^6.0.3",
     "webrtc-swarm": "^2.4.0",
     "wrtc": "0.0.59"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raymond-h/kittyswarm"
   }
 }
