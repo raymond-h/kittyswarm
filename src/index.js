@@ -3,7 +3,8 @@
 import minimist from 'minimist';
 import signalhub from 'signalhub';
 import swarm from 'webrtc-swarm';
-import wrtc from 'wrtc';
+// import wrtc from 'wrtc';
+import webrtcNative from 'webrtc-native';
 
 import fs from 'fs';
 import path from 'path';
@@ -29,7 +30,7 @@ if(argv.help) {
 
 const hub = signalhub('wrtccat', [].concat(argv.signalhub));
 
-const sw = swarm(hub, { wrtc, maxPeers: 1 });
+const sw = swarm(hub, { wrtc: webrtcNative, maxPeers: 1 });
 
 sw.on('peer', (peer, id) => {
     process.stdin.pipe(peer).pipe(process.stdout);

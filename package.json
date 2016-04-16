@@ -33,8 +33,8 @@
     "minimist": "^1.2.0",
     "signalhub": "^4.3.2",
     "simple-peer": "^6.0.3",
-    "webrtc-swarm": "^2.4.0",
-    "wrtc": "0.0.59"
+    "webrtc-native": "^1.4.0",
+    "webrtc-swarm": "^2.4.0"
   },
   "repository": {
     "type": "git",
