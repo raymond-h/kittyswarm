@@ -34,3 +34,7 @@ const sw = swarm(hub, { wrtc: webrtcNative, maxPeers: 1 });
 sw.on('peer', (peer, id) => {
     process.stdin.pipe(peer).pipe(process.stdout);
 });
+
+sw.on('disconnect', () => {
+    process.exit(0);
+});
