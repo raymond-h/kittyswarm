@@ -5,16 +5,27 @@ import signalhub from 'signalhub';
 import swarm from 'webrtc-swarm';
 import wrtc from 'wrtc';
 
+import fs from 'fs';
+import path from 'path';
+
 const argv = minimist(process.argv.slice(2), {
     default: {
-        'signalhub': [],
-        'user': 'user-' + Math.random(),
-        'room': 'main'
+        'signalhub':
+            process.env['KITTYSWARM_SIGNALHUB_URL'] ?
+            process.env['KITTYSWARM_SIGNALHUB_URL'].split(',') :
+            []
     },
     alias: {
-        'signalhub': 's'
+        'signalhub': 's',
+        'help': 'h'
     }
 });
+
+if(argv.help) {
+    console.log(fs.readFileSync(path.join(__dirname, '../usage.txt'), { encoding: 'utf8' }));
+
+    process.exit(0);
+}
 
 const hub = signalhub('wrtccat', [].concat(argv.signalhub));
 

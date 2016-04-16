@@ -1,0 +1,5 @@
+Usage: kittyswarm [OPTIONS]
+
+Options:
+    --signalhub, -s     Specify signalhub to connect to (can be used multiple times)
+    --help, -h          Show this message

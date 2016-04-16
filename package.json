@@ -1,10 +1,13 @@
 {
-  "name": "wrtccat",
+  "name": "kittyswarm",
   "description": "WebRTC + Signalhub + (net)cats",
   "version": "0.0.0",
   "license": "MIT",
   "main": "lib/index.js",
   "author": "Raymond Hammarling",
+  "bin": {
+    "kittyswarm": "./lib/index.js"
+  },
   "scripts": {
     "lint": "eslint src/ test/",
     "test": "mocha --compilers js:babel-register,es6:babel-register,es6.js:babel-register test/",

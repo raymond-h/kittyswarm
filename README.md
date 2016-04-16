@@ -1,16 +1,21 @@
-# wrtccat
+# kittyswarm
 WebRTC + Signalhub + (net)cats
 
 ## Installing
-`npm install wrtccat`
+`npm install -g kittyswarm`
 
 ## Example usage
-```js
-var wrtccat = require('wrtccat');
+```sh
+# in one terminal
+kittyswarm -s $SIGNALHUB_URL
 
-// Do whatever you want with 'wrtccat'!
+# in another terminal
+kittyswarm -s $SIGNALHUB_URL
+
+# stdin from the first terminal is now linked to stdout of second terminal
+# and vice versa!
 ```
-    
+
 ## License
 The MIT License (MIT)
 
