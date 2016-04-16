@@ -3,7 +3,6 @@
 import minimist from 'minimist';
 import signalhub from 'signalhub';
 import swarm from 'webrtc-swarm';
-// import wrtc from 'wrtc';
 import webrtcNative from 'webrtc-native';
 
 import fs from 'fs';
