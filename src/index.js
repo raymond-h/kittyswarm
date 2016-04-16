@@ -2,7 +2,7 @@
 
 import minimist from 'minimist';
 import signalhub from 'signalhub';
-import SimplePeer from 'simple-peer';
+import swarm from 'webrtc-swarm';
 import wrtc from 'wrtc';
 
 const argv = minimist(process.argv.slice(2), {
@@ -12,65 +12,14 @@ const argv = minimist(process.argv.slice(2), {
         'room': 'main'
     },
     alias: {
-        'signalhub': 's',
-        'user': 'u',
-        'room': 'r'
+        'signalhub': 's'
     }
 });
 
-const signalhubs = [].concat(argv.signalhub);
+const hub = signalhub('wrtccat', [].concat(argv.signalhub));
 
-const hub = signalhub('wrtccat', signalhubs);
+const sw = swarm(hub, { wrtc, maxPeers: 1 });
 
-const roomName = argv.room;
-const user = argv.user;
-
-hub.broadcast(roomName, {
-    type: 'connected',
-    user
+sw.on('peer', (peer, id) => {
+    process.stdin.pipe(peer).pipe(process.stdout);
 });
-
-const subber =
-    hub.subscribe(roomName)
-    .on('data', data => {
-        if(data.user === user) return;
-
-        switch(data.type) {
-            case 'connected': {
-                hub.broadcast(roomName, {
-                    type: 'requestConnect',
-                    user,
-                    to: data.user
-                });
-                initiatePeerness(data.user, false);
-                break;
-            }
-
-            case 'requestConnect': {
-                initiatePeerness(data.user, true);
-                break;
-            }
-        }
-    });
-
-function initiatePeerness(who, initiator) {
-    subber
-    .on('data', data => {
-        if(data.type === 'signal' && data.user === who) {
-            peer.signal(data.data);
-        }
-    });
-
-    const peer = new SimplePeer({
-        initiator, wrtc
-    });
-
-    peer
-    .on('signal', data => {
-        hub.broadcast(roomName, { user, type: 'signal', data });
-    })
-    .on('connect', () => {
-        subber.removeAllListeners('data');
-        process.stdin.pipe(peer).pipe(process.stdout);
-    });
-}
